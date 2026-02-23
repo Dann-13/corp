@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { CoreDatabaseModule } from '@core';
 import {
   CompanyRegisterController,
+  DocsController,
   HealthController,
 } from './infrastructure/adapters/in/controllers';
 import { CompanyMongodbModule } from './infrastructure/adapters/out/database/mongodb';
@@ -15,7 +16,7 @@ import { COMPANY_REPOSITORY_PORT } from './application/ports/out/repositories';
     CoreDatabaseModule.forRoot({ appName: 'auth' }),
     CompanyMongodbModule,
   ],
-  controllers: [CompanyRegisterController, HealthController],
+  controllers: [CompanyRegisterController, DocsController, HealthController],
   providers: [
     CompanyRepository,
     {

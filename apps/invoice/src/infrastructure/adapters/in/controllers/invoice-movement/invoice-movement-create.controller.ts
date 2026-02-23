@@ -6,6 +6,7 @@ import {
   Inject,
   Post,
 } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { InvoiceMovementCreateRequestDto } from '../../../../../application/ports/in/dtos';
 import {
   INVOICE_MOVEMENT_CREATE_USE_CASE_PORT,
@@ -13,6 +14,7 @@ import {
 } from '../../../../../application/ports/in/use-cases/invoice-movement-create.use-case.port';
 import { InvoiceMovementResponseDto } from '../../../../../application/ports/out/dtos';
 
+@ApiTags('Invoice Movements')
 @Controller('invoices/movements')
 export class InvoiceMovementCreateController {
   constructor(
@@ -22,6 +24,15 @@ export class InvoiceMovementCreateController {
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({
+    summary: 'Create a new invoice movement',
+    description: 'Creates a line item for an invoice',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Invoice movement successfully created',
+    type: InvoiceMovementResponseDto,
+  })
   async handle(
     @Body() payload: InvoiceMovementCreateRequestDto,
   ): Promise<{ success: true; data: InvoiceMovementResponseDto }> {

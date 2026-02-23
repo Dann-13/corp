@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CoreDatabaseModule } from '@core';
-import { InvoiceCreateController } from './infrastructure/adapters/in/controllers/invoice';
-import { InvoiceMovementCreateController } from './infrastructure/adapters/in/controllers/invoice-movement';
-import { HealthController } from './infrastructure/adapters/in/controllers/health';
+import {
+  DocsController,
+  HealthController,
+  InvoiceCreateController,
+  InvoiceMovementCreateController,
+} from './infrastructure/adapters/in/controllers';
 import {
   INVOICE_CREATE_USE_CASE_PORT,
   INVOICE_MOVEMENT_CREATE_USE_CASE_PORT,
@@ -38,9 +41,10 @@ import {
     InvoiceMovementMongodbModule,
   ],
   controllers: [
+    DocsController,
+    HealthController,
     InvoiceCreateController,
     InvoiceMovementCreateController,
-    HealthController,
   ],
   providers: [
     {
