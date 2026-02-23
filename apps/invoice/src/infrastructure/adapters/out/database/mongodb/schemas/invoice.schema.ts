@@ -8,11 +8,14 @@ export class Invoice {
   @Prop({ type: String, required: true, index: true, unique: true })
   uuid: string;
 
+  @Prop({ type: String, required: true, index: true })
+  company: string;
+
   @Prop({ type: String, required: true, index: true, unique: true })
   invoiceNumber: string;
 
   @Prop({ type: String, required: true })
-  customerName: string;
+  supplier: string;
 
   @Prop({ type: Number, required: true })
   total: number;
@@ -20,7 +23,7 @@ export class Invoice {
   @Prop({ type: String, required: true, default: 'COP' })
   currency: string;
 
-  @Prop({ type: String, required: true, default: 'DRAFT' })
+  @Prop({ type: String, required: true })
   status: string;
 
   @Prop({ type: Date, default: Date.now })

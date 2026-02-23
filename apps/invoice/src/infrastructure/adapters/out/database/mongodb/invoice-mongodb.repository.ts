@@ -6,8 +6,9 @@ import { InvoiceDocument } from './schemas';
 
 export type InvoiceCreatePayload = {
   uuid: string;
+  company: string;
   invoiceNumber: string;
-  customerName: string;
+  supplier: string;
   total: number;
   currency?: string;
 };
@@ -34,8 +35,9 @@ export class InvoiceMongodbRepository {
 
     return {
       uuid: data.uuid,
+      company: data.company,
       invoiceNumber: data.invoiceNumber,
-      customerName: data.customerName,
+      supplier: data.supplier,
       total: data.total,
       currency: data.currency,
       status: data.status,

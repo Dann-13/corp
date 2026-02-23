@@ -1,7 +1,8 @@
 export class InvoiceEntity {
   uuid: string;
+  company: string;
   invoiceNumber: string;
-  customerName: string;
+  supplier: string;
   total: number;
   currency: string;
   status: string;

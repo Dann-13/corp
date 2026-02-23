@@ -2,12 +2,28 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CoreDatabaseModule } from '@core';
 import { InvoiceCreateController } from './infrastructure/adapters/in/controllers/invoice';
+import { InvoiceMovementCreateController } from './infrastructure/adapters/in/controllers/invoice-movement';
 import { HealthController } from './infrastructure/adapters/in/controllers/health';
-import { INVOICE_CREATE_USE_CASE_PORT } from './application/ports/in/use-cases';
-import { InvoiceCreateUseCase } from './application/use-cases/invoice';
-import { INVOICE_REPOSITORY_PORT } from './application/ports/out/repositories';
-import { InvoiceRepository } from './infrastructure/adapters/out/repositories/invoice';
-import { InvoiceMongodbModule } from './infrastructure/adapters/out/database/mongodb';
+import {
+  INVOICE_CREATE_USE_CASE_PORT,
+  INVOICE_MOVEMENT_CREATE_USE_CASE_PORT,
+} from './application/ports/in/use-cases';
+import {
+  InvoiceCreateUseCase,
+  InvoiceMovementCreateUseCase,
+} from './application/use-cases';
+import {
+  INVOICE_REPOSITORY_PORT,
+  INVOICE_MOVEMENT_REPOSITORY_PORT,
+} from './application/ports/out/repositories';
+import {
+  InvoiceRepository,
+  InvoiceMovementRepository,
+} from './infrastructure/adapters/out/repositories';
+import {
+  InvoiceMongodbModule,
+  InvoiceMovementMongodbModule,
+} from './infrastructure/adapters/out/database/mongodb';
 
 @Module({
   imports: [
@@ -19,8 +35,13 @@ import { InvoiceMongodbModule } from './infrastructure/adapters/out/database/mon
       appName: 'invoice',
     }),
     InvoiceMongodbModule,
+    InvoiceMovementMongodbModule,
   ],
-  controllers: [InvoiceCreateController, HealthController],
+  controllers: [
+    InvoiceCreateController,
+    InvoiceMovementCreateController,
+    HealthController,
+  ],
   providers: [
     {
       provide: INVOICE_REPOSITORY_PORT,
@@ -29,6 +50,14 @@ import { InvoiceMongodbModule } from './infrastructure/adapters/out/database/mon
     {
       provide: INVOICE_CREATE_USE_CASE_PORT,
       useClass: InvoiceCreateUseCase,
+    },
+    {
+      provide: INVOICE_MOVEMENT_REPOSITORY_PORT,
+      useClass: InvoiceMovementRepository,
+    },
+    {
+      provide: INVOICE_MOVEMENT_CREATE_USE_CASE_PORT,
+      useClass: InvoiceMovementCreateUseCase,
     },
   ],
 })

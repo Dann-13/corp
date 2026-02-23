@@ -1,6 +1,7 @@
 export class InvoiceCreateRequestDto {
+  company: string;
   invoiceNumber: string;
-  customerName: string;
+  supplier: string;
   total: number;
   currency?: string;
 }
