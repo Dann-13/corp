@@ -6,6 +6,13 @@ import { AuthModule } from './auth.module';
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
 
+  // ✅ Habilitar CORS para permitir conexiones desde Expo
+  app.enableCors({
+    origin: '*', // Permitir todos los orígenes en desarrollo
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
   // Configuración OpenAPI
   const config = new DocumentBuilder()
     .setTitle('Auth API')
@@ -21,6 +28,18 @@ async function bootstrap() {
     res.json(document);
   });
 
-  await app.listen(process.env.PORT ?? 3000);
+  const port = process.env.PORT ?? 3000;
+  await app.listen(port);
+
+  // 🎯 Logs informativos
+  console.log('');
+  console.log('🚀 ========================================');
+  console.log(`📡 Auth Service running on: http://localhost:${port}`);
+  console.log(`📚 Swagger Docs: http://localhost:${port}/api-json`);
+  console.log(
+    `🔐 Company Register: http://localhost:${port}/companies/register`,
+  );
+  console.log('========================================');
+  console.log('');
 }
 void bootstrap();
