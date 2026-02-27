@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CompanyResponseDto } from '../../../../../application/ports/out/dtos';
+import { CompanyResponseDto } from '../../../../../application/ports/out/dtos/company-response.dto';
+import type { CompanyWithPasswordDto } from '../../../../../application/ports/out/dtos/company-with-password.dto';
 import { CompanyDocument } from './schemas';
 
 export type CompanyCreatePayload = {
@@ -59,6 +60,32 @@ export class CompanyMongodbRepository {
       isActive: company.isActive,
       createdAt: company.createdAt,
       updatedAt: company.updatedAt,
+    };
+  }
+
+  /**
+   * Encuentra una compañía por email e incluye el password hasheado
+   * Usado para autenticación - ⚠️ NO exponer este método públicamente
+   */
+  async findByEmailWithPassword(
+    email: string,
+  ): Promise<CompanyWithPasswordDto | null> {
+    const company = await this.companyModel
+      .findOne({ email: email.toLowerCase() })
+      .lean()
+      .exec();
+
+    if (!company) return null;
+
+    return {
+      uuid: company.uuid,
+      name: company.name,
+      email: company.email,
+      address: company.address,
+      isActive: company.isActive,
+      createdAt: company.createdAt,
+      updatedAt: company.updatedAt,
+      hashedPassword: company.password, // Incluir password para validación
     };
   }
 }
