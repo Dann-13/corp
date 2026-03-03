@@ -8,6 +8,7 @@ export interface CompanyWithPasswordDto {
   email: string;
   address: string;
   isActive: boolean;
+  roles: string[];
   createdAt: Date;
   updatedAt: Date;
   hashedPassword: string;

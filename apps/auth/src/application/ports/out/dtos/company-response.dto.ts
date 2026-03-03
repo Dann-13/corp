@@ -32,6 +32,13 @@ export class CompanyResponseDto {
   isActive: boolean;
 
   @ApiProperty({
+    description: 'User roles',
+    example: ['company'],
+    type: [String],
+  })
+  roles: string[];
+
+  @ApiProperty({
     description: 'Creation timestamp',
     example: '2024-01-01T00:00:00.000Z',
   })

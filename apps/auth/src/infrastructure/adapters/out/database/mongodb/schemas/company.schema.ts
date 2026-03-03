@@ -23,6 +23,9 @@ export class Company {
   @Prop({ type: Boolean, default: true })
   isActive: boolean;
 
+  @Prop({ type: [String], default: ['company'] })
+  roles: string[];
+
   @Prop({ type: Date, default: Date.now })
   createdAt: Date;
 

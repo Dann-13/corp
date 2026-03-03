@@ -39,6 +39,7 @@ export class CompanyMongodbRepository {
       email: data.email,
       address: data.address,
       isActive: data.isActive,
+      roles: data.roles || ['company'],
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
     };
@@ -58,6 +59,7 @@ export class CompanyMongodbRepository {
       email: company.email,
       address: company.address,
       isActive: company.isActive,
+      roles: company.roles || ['company'],
       createdAt: company.createdAt,
       updatedAt: company.updatedAt,
     };
@@ -83,6 +85,7 @@ export class CompanyMongodbRepository {
       email: company.email,
       address: company.address,
       isActive: company.isActive,
+      roles: company.roles || ['company'],
       createdAt: company.createdAt,
       updatedAt: company.updatedAt,
       hashedPassword: company.password, // Incluir password para validación
